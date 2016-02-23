@@ -6,7 +6,7 @@
 #    By: vsteffen <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/02/06 20:52:05 by vsteffen          #+#    #+#              #
-#    Updated: 2016/02/06 20:53:10 by vsteffen         ###   ########.fr        #
+#    Updated: 2016/02/23 17:32:20 by vsteffen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,22 +102,30 @@ $(NAME): $(OBJ)
 	@echo "Building $@"
 	@$(AR) rc $@ $(OBJ)
 	@$(RANLIB) $@
-	@echo "\033[34mAll is done!\033[0m"
+	@echo "\033[32m ╔════════════════╗"
+	@echo " ║  All is done ! ║"
+	@echo " ╚════════════════╝\033[0m"
 
 $(OPATH)/%.o: $(CPATH)/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(OPATH):
+	@echo " \033[33m\033[4m\033[1m → Make rule \033[0m"
 	@echo "Creating OBJ directory"
 	@$(MKDIR) $@
 
 clean:
+	@echo " \033[33m\033[4m\033[1m → Clean rule \033[0m"
 	@echo "Deleting OBJS"
 	@$(RM) -Rf $(OPATH)
 
 fclean: clean
+	@echo " \033[33m\033[4m\033[1m → Fclean rule \033[0m"
 	@echo "Deleting $(NAME)"
 	@$(RM) -f $(NAME)
-	@echo "\033[34mAll clear!\033[0m"
+	@echo "\033[32m ╔═══════════════╗"
+	@echo " ║  All clear !  ║"
+	@echo " ╚═══════════════╝\033[0m\n"
+
 
 re: fclean all
