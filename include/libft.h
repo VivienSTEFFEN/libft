@@ -6,7 +6,7 @@
 /*   By: vsteffen <vsteffen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/22 20:42:40 by vsteffen          #+#    #+#             */
-/*   Updated: 2016/03/30 19:45:36 by vsteffen         ###   ########.fr       */
+/*   Updated: 2016/03/30 19:55:03 by vsteffen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void				ft_swap_str(char **a, char **b);
 void				ft_swap_char(char *a, char *b);
 void				ft_swap_int(int *a, int *b);
 void				ft_qsort_tab_int(int array[], int first, int last);
+void				ft_qsortr_tab_int(int array[], int first, int last);
 
 typedef struct		s_list
 {

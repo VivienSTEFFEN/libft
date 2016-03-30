@@ -6,7 +6,7 @@
 #    By: vsteffen <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/02/06 20:52:05 by vsteffen          #+#    #+#              #
-#    Updated: 2016/03/30 19:46:09 by vsteffen         ###   ########.fr        #
+#    Updated: 2016/03/30 19:55:11 by vsteffen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,7 +89,8 @@ SRC = ft_atoi.c \
 	  ft_swap_str.c \
 	  ft_swap_char.c \
 	  ft_swap_int.c \
-	  ft_qsort_tab_int.c
+	  ft_qsort_tab_int.c \
+	  ft_qsortr_tab_int.c
 
 OBJ = $(patsubst %.c, $(OPATH)/%.o, $(SRC))
 
