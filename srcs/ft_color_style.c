@@ -6,7 +6,7 @@
 /*   By: vsteffen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 16:14:08 by vsteffen          #+#    #+#             */
-/*   Updated: 2016/05/13 19:16:06 by vsteffen         ###   ########.fr       */
+/*   Updated: 2016/05/13 19:24:52 by vsteffen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	ft_color_style(char *color1, char *color2, char *str, int again)
 {
-	if (!color1)
+	if (color1)
 		ft_putstr(color1);
-	if (!color2)
+	if (color2)
 		ft_putstr(color2);
-	if (!str)
+	if (str)
 		ft_putstr(str);
 	if (again == 0)
 		ft_putstr(CS_RESET);
