@@ -5,14 +5,45 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vsteffen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/07 16:20:59 by vsteffen          #+#    #+#             */
-/*   Updated: 2016/03/15 18:28:43 by vsteffen         ###   ########.fr       */
+/*   Created: 2016/09/01 14:02:42 by vsteffen          #+#    #+#             */
+/*   Updated: 2016/09/01 14:02:56 by vsteffen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdlib.h>
-#include "libft.h"
+#include <libft.h>
+
+static t_gnl	*ft_lstdict(t_gnl *lst, const int n)
+{
+	while (lst)
+	{
+		if (lst->fd == n)
+			return (lst);
+		lst = lst->next;
+	}
+	return (NULL);
+}
+
+static t_gnl	*gnl_add_elem(t_gnl **list, const int fd)
+{
+	t_gnl	*beginning;
+	t_gnl	*elem;
+
+	elem = mallocp(sizeof(t_gnl));
+	elem->fd = fd;
+	elem->line = NULL;
+	elem->next = NULL;
+	if (!(*list))
+	{
+		*list = elem;
+		return (elem);
+	}
+	beginning = (*list);
+	while ((*list)->next)
+		(*list) = (*list)->next;
+	(*list)->next = elem;
+	*list = beginning;
+	return (elem);
+}
 
 static char		*strjoin_secure(char *s1, char *s2)
 {
@@ -40,41 +71,51 @@ static char		*strjoin_secure(char *s1, char *s2)
 	return (NULL);
 }
 
-static int		newline_detected(char *stbuff, char **line)
+static int		newline_detected(char *stbuff, char **line,
+		int flag, t_gnl **elem)
 {
 	char			*nl;
 
-	nl = ft_strchr(stbuff, '\n');
-	*line = ft_strsub(stbuff, 0, nl - stbuff);
-	ft_strcpy(stbuff, nl + 1);
-	return (1);
+	if (flag == 0)
+	{
+		nl = ft_strchr(stbuff, '\n');
+		*line = ft_strsub(stbuff, 0, nl - stbuff);
+		ft_strcpy(stbuff, nl + 1);
+		return (1);
+	}
+	else
+	{
+		*line = ft_strdup((*elem)->line);
+		ft_strdel(&((*elem)->line));
+		return (1);
+	}
 }
 
 int				get_next_line(const int fd, char **line)
 {
 	char			buff[BUFF_SIZE + 1];
-	static char		*stbuff[2147483647];
+	static t_gnl	*lst = NULL;
+	t_gnl			*elem;
 	int				ret;
 
 	if (line == NULL || fd < 0)
 		return (-1);
-	if ((ft_strchr(stbuff[fd], '\n') != NULL) && stbuff[fd] && stbuff[fd][0])
-		return (newline_detected(stbuff[fd], line));
+	if ((elem = ft_lstdict(lst, fd)) == NULL)
+		elem = gnl_add_elem(&lst, fd);
+	if ((elem->line && ft_strchr(elem->line, '\n') != NULL)
+			&& elem->line && elem->line[0])
+		return (newline_detected(elem->line, line, 0, NULL));
 	while ((ret = read(fd, buff, BUFF_SIZE)) > 0)
 	{
 		buff[ret] = '\0';
-		if ((stbuff[fd] = strjoin_secure(stbuff[fd], buff)) == NULL)
+		if ((elem->line = strjoin_secure(elem->line, buff)) == NULL)
 			return (-1);
-		if (ft_strchr(stbuff[fd], '\n') != NULL)
-			return (newline_detected(stbuff[fd], line));
+		if (ft_strchr(elem->line, '\n') != NULL)
+			return (newline_detected(elem->line, line, 0, NULL));
 	}
 	if (ret == -1)
 		return (-1);
-	if (stbuff[fd] && *(stbuff[fd]))
-	{
-		*line = ft_strdup(stbuff[fd]);
-		ft_strdel(&(stbuff[fd]));
-		return (1);
-	}
+	if (elem->line && *(elem->line))
+		return (newline_detected(NULL, line, 1, &elem));
 	return (0);
 }
