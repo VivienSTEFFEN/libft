@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdel.c                                        :+:      :+:    :+:   */
+/*   ft_recursive_factorial.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vsteffen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/22 16:13:50 by vsteffen          #+#    #+#             */
-/*   Updated: 2016/11/22 16:13:52 by vsteffen         ###   ########.fr       */
+/*   Created: 2016/11/04 16:01:55 by vsteffen          #+#    #+#             */
+/*   Updated: 2016/11/22 15:59:04 by vsteffen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstdel(t_list **alst, void (*del)(void *, size_t))
+int		ft_recursive_factorial(int nb)
 {
-	t_list		*list;
-	t_list		*next_lst;
-
-	if (!alst || !del)
-		return ;
-	list = *alst;
-	while (list)
-	{
-		next_lst = list->next;
-		ft_lstdelone(&list, del);
-		list = next_lst;
-	}
-	*alst = NULL;
+	if (nb < 0 || nb > 12)
+		return (0);
+	if (nb >= 1)
+		return (nb * ft_recursive_factorial(nb - 1));
+	else
+		return (1);
 }

@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdel.c                                        :+:      :+:    :+:   */
+/*   ft_range.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vsteffen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/22 16:13:50 by vsteffen          #+#    #+#             */
-/*   Updated: 2016/11/22 16:13:52 by vsteffen         ###   ########.fr       */
+/*   Created: 2016/11/04 19:07:34 by vsteffen          #+#    #+#             */
+/*   Updated: 2016/11/22 16:01:06 by vsteffen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstdel(t_list **alst, void (*del)(void *, size_t))
+int		*ft_range(int min, int max)
 {
-	t_list		*list;
-	t_list		*next_lst;
+	int		*ret;
+	int		i;
 
-	if (!alst || !del)
-		return ;
-	list = *alst;
-	while (list)
+	if (min >= max)
+		return (NULL);
+	ret = (int *)malloc(sizeof(int) * (max - min));
+	i = 0;
+	while (min < max)
 	{
-		next_lst = list->next;
-		ft_lstdelone(&list, del);
-		list = next_lst;
+		ret[i] = min;
+		min++;
+		i++;
 	}
-	*alst = NULL;
+	return (ret);
 }

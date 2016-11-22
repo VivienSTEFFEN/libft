@@ -6,7 +6,7 @@
 /*   By: vsteffen <vsteffen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/22 20:42:40 by vsteffen          #+#    #+#             */
-/*   Updated: 2016/09/01 23:16:42 by vsteffen         ###   ########.fr       */
+/*   Updated: 2016/11/22 16:15:05 by vsteffen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@ int					ft_strequ(char const *s1, char const *s2);
 int					ft_strnequ(char const *s1, char const *s2, size_t n);
 char				*ft_strsub(char const *s, unsigned int start, size_t len);
 char				*ft_strjoin(char const *s1, char const *s2);
+char				*ft_strjoinaf1(char *s1, char const *s2);
+char				*ft_strjoinaf2(char const *s1, char *s2);
+char				*ft_strjoinaf12(char *s1, char *s2);
 char				*ft_strtrim(char const *s);
 char				**ft_strsplit(char const *s, char c);
 void				ft_strclr(char *s);
@@ -97,6 +100,13 @@ void				ft_qsort_tab_int(int *array, int first, int last);
 void				ft_qsortr_tab_int(int *array, int first, int last);
 void				ft_qsort_tab_str(char **array, int first, int last);
 void				ft_qsortr_tab_str(char **array, int first, int last);
+
+int					ft_abs(int nb);
+int					ft_sqrt(int nb);
+int					ft_iterative_factorial(int nb);
+int					ft_recursive_factorial(int nb);
+int					*ft_range(int min, int max);
+void				ft_foreach(int *tab, int length, void (*f)(int));
 
 typedef struct		s_list
 {
