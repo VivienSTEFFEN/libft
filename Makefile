@@ -163,17 +163,17 @@ $(OPATH)/%.o: $(CPATH)/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@ -I $(HPATH)
 
 $(OPATH):
-	@echo " \033[33m\033[4m\033[1m → Make rule \033[0m"
+	@echo "\n\033[33m\033[4m\033[1m → Libft \"Make\"\033[0m"
 	@echo "Creating OBJ directory"
 	@$(MKDIR) $@ $@$(PRINTF)
 
 clean:
-	@echo " \033[33m\033[4m\033[1m → Clean rule \033[0m"
+	@echo "\n\033[33m\033[4m\033[1m → Libft \"Clean\"\033[0m"
 	@echo "Deleting OBJS"
 	@$(RM) -Rf $(OPATH)
 
 fclean: clean
-	@echo " \033[33m\033[4m\033[1m → Fclean rule \033[0m"
+	@echo "\n\033[33m\033[4m\033[1m → Libft \"Fclean\"\033[0m"
 	@echo "Deleting $(NAME)"
 	@$(RM) -f $(NAME)
 	@echo "\033[32m ╔═══════════════╗"
