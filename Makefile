@@ -6,11 +6,11 @@
 #    By: vsteffen <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/02/06 20:52:05 by vsteffen          #+#    #+#              #
-#    Updated: 2016/11/22 16:08:34 by vsteffen         ###   ########.fr        #
+#    Updated: 2018/03/19 18:11:08 by vsteffen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libftprintf.a
+NAME = libft.a
 
 CC =	/usr/bin/clang
 RM =	/bin/rm
