@@ -1,21 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa_base.c                                     :+:      :+:    :+:   */
+/*   transform_base2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vsteffen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/09/01 15:57:01 by vsteffen          #+#    #+#             */
-/*   Updated: 2016/09/01 15:57:20 by vsteffen         ###   ########.fr       */
+/*   Created: 2018/03/06 16:55:26 by vsteffen          #+#    #+#             */
+/*   Updated: 2018/03/06 16:55:28 by vsteffen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include "ft_printf.h"
 
-char			*ft_itoa_base(uintmax_t nb, uint8_t base, size_t prec)
+uint8_t		count_numeral_base(uintmax_t nb, uint8_t base)
+{
+	uint8_t		count;
+
+	count = 1;
+	while (nb /= base)
+		++count;
+	return (count);
+}
+
+char		*ft_itoa_base_printf(uintmax_t nb, uint8_t base, char *alph, \
+	size_t prec)
 {
 	char		*output;
-	char		*alph;
 	size_t		length;
 
 	if (nb == 0)
@@ -25,7 +35,6 @@ char			*ft_itoa_base(uintmax_t nb, uint8_t base, size_t prec)
 		length = prec;
 	output = (char *)mallocp(sizeof(char) * length + 1);
 	output[length] = '\0';
-	alph = "0123456789abcdef";
 	while (nb != 0)
 	{
 		length--;

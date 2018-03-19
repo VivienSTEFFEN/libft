@@ -1,31 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_double_extract_int_part.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vsteffen <vsteffen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vsteffen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/22 22:23:42 by vsteffen          #+#    #+#             */
-/*   Updated: 2015/12/22 23:51:45 by vsteffen         ###   ########.fr       */
+/*   Created: 2018/03/13 13:07:19 by vsteffen          #+#    #+#             */
+/*   Updated: 2018/03/13 13:07:21 by vsteffen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s)
+int64_t		ft_d_extract_round_int_part(double nb)
 {
-	size_t		pos;
-	char		*dest;
-
-	pos = 0;
-	dest = (char*)mallocp(sizeof(char) * ft_strlen(s) + 1);
-	if (!dest)
-		return (NULL);
-	while (s[pos])
-	{
-		dest[pos] = s[pos];
-		pos++;
-	}
-	dest[pos] = '\0';
-	return (dest);
+	return (nb >= 0 ? (int64_t)(nb + 0.5) : (int64_t)(nb - 0.5));
 }

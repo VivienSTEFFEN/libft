@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_length_numeral_int64.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vsteffen <vsteffen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vsteffen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/22 22:23:42 by vsteffen          #+#    #+#             */
-/*   Updated: 2015/12/22 23:51:45 by vsteffen         ###   ########.fr       */
+/*   Created: 2018/03/15 19:23:24 by vsteffen          #+#    #+#             */
+/*   Updated: 2018/03/15 19:25:10 by vsteffen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s)
+uint8_t	ft_length_numeral_int64(int64_t nb)
 {
-	size_t		pos;
-	char		*dest;
+	uint8_t		count;
 
-	pos = 0;
-	dest = (char*)mallocp(sizeof(char) * ft_strlen(s) + 1);
-	if (!dest)
-		return (NULL);
-	while (s[pos])
-	{
-		dest[pos] = s[pos];
-		pos++;
-	}
-	dest[pos] = '\0';
-	return (dest);
+	count = 1;
+	while (nb /= 10)
+		++count;
+	return (count);
 }
