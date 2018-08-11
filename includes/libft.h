@@ -6,7 +6,7 @@
 /*   By: vsteffen <vsteffen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/22 20:42:40 by vsteffen          #+#    #+#             */
-/*   Updated: 2016/11/22 16:15:05 by vsteffen         ###   ########.fr       */
+/*   Updated: 2018/08/12 00:51:48 by vsteffen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,4 +141,5 @@ char				*ft_dtoa_clean(double nb, uint8_t precision);
 int64_t				ft_d_extract_round_int_part(double nb);
 int64_t				ft_pow_int64(int64_t nb, uint8_t power);
 uint8_t				ft_length_numeral_int64(int64_t nb);
+int64_t				ft_hexstr_to_int64_t(unsigned const char *hex);
 #endif
