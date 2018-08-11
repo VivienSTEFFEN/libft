@@ -144,7 +144,8 @@ SRC =	ft_atoi.c \
 		$(PRINTF)/transform_p.c \
 		$(PRINTF)/transform_cs.c \
 		$(PRINTF)/transform_wide1.c \
-		$(PRINTF)/transform_wide2.c
+		$(PRINTF)/transform_wide2.c \
+		ft_hexstr_to_int64_t.c
 
 .PHONY: all clean fclean re
 
