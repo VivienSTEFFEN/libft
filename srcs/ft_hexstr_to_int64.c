@@ -6,7 +6,7 @@
 /*   By: vsteffen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/12 00:28:39 by vsteffen          #+#    #+#             */
-/*   Updated: 2018/08/12 00:28:41 by vsteffen         ###   ########.fr       */
+/*   Updated: 2018/08/12 20:23:53 by vsteffen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static const int64_t	g_hextable[] = {\
 
 int64_t					ft_hexstr_to_int64_t(unsigned const char *hex)
 {
-	long	output;
+	int64_t		output;
 
 	output = 0;
 	while (*hex && output >= 0)

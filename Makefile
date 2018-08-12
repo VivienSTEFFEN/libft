@@ -6,7 +6,7 @@
 #    By: vsteffen <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/02/06 20:52:05 by vsteffen          #+#    #+#              #
-#    Updated: 2018/08/12 20:19:25 by vsteffen         ###   ########.fr        #
+#    Updated: 2018/08/12 20:26:03 by vsteffen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -145,7 +145,7 @@ SRC =	ft_atoi.c \
 		$(PRINTF)/transform_cs.c \
 		$(PRINTF)/transform_wide1.c \
 		$(PRINTF)/transform_wide2.c \
-		ft_hexstr_to_int64_t.c \
+		ft_hexstr_to_int64.c \
 		ft_int64_to_array.c
 
 .PHONY: all clean fclean re
