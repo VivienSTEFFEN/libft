@@ -6,30 +6,31 @@
 #    By: vsteffen <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/02/06 20:52:05 by vsteffen          #+#    #+#              #
-#    Updated: 2018/08/12 20:26:03 by vsteffen         ###   ########.fr        #
+#    Updated: 2018/09/17 16:07:12 by vsteffen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libft.a
+NAME	=	libft.a
 
-CC =	/usr/bin/clang
-RM =	/bin/rm
-MAKE =	/usr/bin/make
-MKDIR =	/bin/mkdir
-AR =	/usr/bin/ar
-RANLIB = /usr/bin/ranlib
+CC		=	/usr/bin/clang
+RM		=	/bin/rm
+MAKE	=	/usr/bin/make -C
+MKDIR	=	/bin/mkdir -p
+AR		=	/usr/bin/ar
+RANLIB	=	/usr/bin/ranlib
+GIT		=	/usr/bin/git
 
-OBJ = $(patsubst %.c, $(OPATH)/%.o, $(SRC))
+OBJ		=	$(patsubst %.c, $(OPATH)/%.o, $(SRC))
 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS	=	-Wall -Wextra -Werror -g
 
-ROOT =		$(shell /bin/pwd)
-OPATH =		$(ROOT)/objs
-CPATH =		$(ROOT)/srcs
-HPATH =		$(ROOT)/includes
-PRINTF =	/ft_printf
+ROOT	=	$(shell /bin/pwd)
+OPATH	=	$(ROOT)/objs
+CPATH	=	$(ROOT)/srcs
+HPATH	=	-I $(ROOT)/includes
+PRINTF	=	/ft_printf
 
-SRC =	ft_atoi.c \
+SRC	=	ft_atoi.c \
 		ft_bzero.c \
 		ft_isalnum.c \
 		ft_isalpha.c \
@@ -153,7 +154,6 @@ SRC =	ft_atoi.c \
 all: $(NAME)
 
 $(NAME): $(OPATH) $(OBJ)
-	@echo "Creating OBJ files"
 	@echo "Building $@"
 	@$(AR) rc $@ $(OBJ)
 	@$(RANLIB) $@
@@ -162,25 +162,23 @@ $(NAME): $(OPATH) $(OBJ)
 	@echo " ╚════════════════╝\033[0m"
 
 $(OPATH)/%.o: $(CPATH)/%.c
-	@$(CC) $(CFLAGS) -c $< -o $@ -I $(HPATH)
+	@$(CC) $(CFLAGS) -c $< -o $@ $(HPATH)
 
 $(OPATH):
 	@echo "\n\033[33m\033[4m\033[1m → Libft \"Make\"\033[0m"
-	@echo "Creating OBJ directory"
+	@echo "Creating OBJ directory and files if they don't exist or have changed"
 	@$(MKDIR) $@ $@$(PRINTF)
 
 clean:
 	@echo "\n\033[33m\033[4m\033[1m → Libft \"Clean\"\033[0m"
-	@echo "Deleting OBJS"
-	@$(RM) -Rf $(OPATH)
+	@echo "Deleting OBJS."
+	@$(RM) -rf $(OPATH)
+	@echo "\033[32mOBJS deleted.\033[0m\n"
 
 fclean: clean
-	@echo "\n\033[33m\033[4m\033[1m → Libft \"Fclean\"\033[0m"
+	@echo "\033[33m\033[4m\033[1m → Libft \"Fclean\"\033[0m"
 	@echo "Deleting $(NAME)"
 	@$(RM) -f $(NAME)
-	@echo "\033[32m ╔═══════════════╗"
-	@echo " ║  All clear !  ║"
-	@echo " ╚═══════════════╝\033[0m"
-
+	@echo "\033[32m$(NAME) deleted.\033[0m\n"
 
 re: fclean all
