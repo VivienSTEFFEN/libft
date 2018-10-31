@@ -29,6 +29,9 @@ OPATH	=	$(ROOT)/objs
 CPATH	=	$(ROOT)/srcs
 HPATH	=	-I $(ROOT)/includes
 PRINTF	=	/ft_printf
+ASMPATH	=	$(ROOT)/LibftASM
+ASMOBJS	=	$(OPATH)/ft_cat.o \
+			$(OPATH)/ft_puts.o
 
 SRC	=	ft_atoi.c \
 		ft_bzero.c \
@@ -151,11 +154,33 @@ SRC	=	ft_atoi.c \
 
 .PHONY: all clean fclean re
 
-all: $(NAME)
+all: pre-check-submodule pre-check-lib $(NAME)
+
+pre-check-submodule:
+	@echo "\n\033[33m\033[4m\033[1m → Libft \"Pre check submodule\"\033[0m"
+	@echo "Update submodules"
+	@$(GIT) submodule init
+	@$(GIT) submodule update --recursive --remote
+
+pre-check-lib:
+	@echo "\n\033[33m\033[4m\033[1m → Libft \"Pre check LibftASM\"\033[0m"
+	@echo "Compile or verify LibftASM"
+	@$(MAKE) $(ASMPATH)
+	@cp $(ASMPATH)/includes/libfts.h $(ROOT)/includes
+
+no-asm: $(OPATH) $(OBJ)
+	@echo "Building $(NAME) without ASM functions"
+	@$(AR) rc $(NAME) $(OBJ)
+	@$(RANLIB) $(NAME)
+	@echo "\033[32m ╔════════════════╗"
+	@echo " ║  All is done ! ║"
+	@echo " ╚════════════════╝\033[0m"
 
 $(NAME): $(OPATH) $(OBJ)
-	@echo "Building $@"
-	@$(AR) rc $@ $(OBJ)
+	@echo "Compiling ASM functions"
+	@cp -rf $(ASMPATH)/objs $(ROOT)
+	@echo "\nBuilding $@ with ASM functions"
+	@$(AR) rc $@ $(OBJ) $(ASMOBJS)
 	@$(RANLIB) $@
 	@echo "\033[32m ╔════════════════╗"
 	@echo " ║  All is done ! ║"
@@ -180,5 +205,7 @@ fclean: clean
 	@echo "Deleting $(NAME)"
 	@$(RM) -f $(NAME)
 	@echo "\033[32m$(NAME) deleted.\033[0m\n"
+	@echo "\033[32mFclean on ASM library.\033[0m\n"
+	@make fclean -C $(ASMPATH)
 
 re: fclean all
