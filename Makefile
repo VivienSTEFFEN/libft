@@ -10,11 +10,12 @@
 #                                                                              #
 # **************************************************************************** #
 
+PROJECT	=	Libft
 NAME	=	libft.a
 
 CC		=	/usr/bin/clang
 RM		=	/bin/rm
-MAKE	=	/usr/bin/make -C
+MAKE	=	/usr/bin/make
 MKDIR	=	/bin/mkdir -p
 AR		=	/usr/bin/ar
 RANLIB	=	/usr/bin/ranlib
@@ -152,60 +153,82 @@ SRC	=	ft_atoi.c \
 		ft_hexstr_to_int64.c \
 		ft_int64_to_array.c
 
+
+COMPILE = no
+
+define PRINT_RED
+    @printf "\033[31m$(1)\033[0m"
+endef
+
+define PRINT_GREEN
+    @printf "\033[32m$(1)\033[0m"
+endef
+
+define PRINT_YELLOW
+    @printf "\033[33m$(1)\033[0m"
+endef
+
+define PRINT_STATUS
+	@printf '['
+	$(if $(filter $(2),SUCCESS),$(call PRINT_GREEN,$(1)))
+	$(if $(filter $(2),FAIL),$(call PRINT_RED,$(1)))
+	$(if $(filter $(2),WARN),$(call PRINT_YELLOW,$(1)))
+	$(if $(filter $(2),INFO),printf $(1))
+	$(if $(filter $(3),-n),printf $(1),echo ']')
+endef
+
 .PHONY: all clean fclean re
 
 all: pre-check-submodule pre-check-lib $(NAME)
 
 pre-check-submodule:
-	@echo "\n\033[33m\033[4m\033[1m → Libft \"Pre check submodule\"\033[0m"
-	@echo "Update submodules"
-	@$(GIT) submodule init
-	@$(GIT) submodule update --recursive --remote
+	@printf $(PROJECT)": Init and update submodules ... "
+	@$(GIT) submodule init &>/dev/null
+	@$(GIT) submodule update --recursive --remote &>/dev/null
+	@$(call PRINT_STATUS,UP-TO-DATE,SUCCESS)
 
 pre-check-lib:
-	@echo "\n\033[33m\033[4m\033[1m → Libft \"Pre check LibftASM\"\033[0m"
-	@echo "Compile or verify LibftASM"
-	@$(MAKE) $(ASMPATH)
+	@echo $(PROJECT)": Compile and verify ASM library ... "
+	@$(MAKE) -C $(ASMPATH)
 	@cp $(ASMPATH)/includes/libfts.h $(ROOT)/includes
 
 no-asm: $(OPATH) $(OBJ)
-	@echo "Building $(NAME) without ASM functions"
+	$(if $(filter $(COMPILE),yes),@echo ']')
+	@printf $(PROJECT)": Building $(NAME) without ASM functions ... "
 	@$(AR) rc $(NAME) $(OBJ)
 	@$(RANLIB) $(NAME)
-	@echo "\033[32m ╔════════════════╗"
-	@echo " ║  All is done ! ║"
-	@echo " ╚════════════════╝\033[0m"
+	@$(call PRINT_STATUS,DONE,SUCCESS)
 
 $(NAME): $(OPATH) $(OBJ)
-	@echo "Compiling ASM functions"
+	$(if $(filter $(COMPILE),yes),@echo ']')
+	@echo $(PROJECT)": Replace objects with ASM objects"
 	@cp -rf $(ASMPATH)/objs $(ROOT)
-	@echo "\nBuilding $@ with ASM functions"
+	@printf $(PROJECT)": Building $@ with ASM functions ... "
 	@$(AR) rc $@ $(OBJ) $(ASMOBJS)
 	@$(RANLIB) $@
-	@echo "\033[32m ╔════════════════╗"
-	@echo " ║  All is done ! ║"
-	@echo " ╚════════════════╝\033[0m"
+	@$(call PRINT_STATUS,DONE,SUCCESS)
 
 $(OPATH)/%.o: $(CPATH)/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@ $(HPATH)
+	$(if $(filter $(COMPILE),no),@printf $(PROJECT)': Files compiling [')
+	@$(eval COMPILE := yes)
+	$(call PRINT_GREEN,.)
 
 $(OPATH):
-	@echo "\n\033[33m\033[4m\033[1m → Libft \"Make\"\033[0m"
-	@echo "Creating OBJ directory and files if they don't exist or have changed"
 	@$(MKDIR) $@ $@$(PRINTF)
+	@echo $(PROJECT)": Directory for objects created"
 
 clean:
-	@echo "\n\033[33m\033[4m\033[1m → Libft \"Clean\"\033[0m"
-	@echo "Deleting OBJS."
-	@$(RM) -rf $(OPATH)
-	@echo "\033[32mOBJS deleted.\033[0m\n"
+	@$(RM) -Rf $(OPATH)
+	@echo $(PROJECT)": Objects cleaned "
+	@printf $(PROJECT)": clean rule "
+	@$(call PRINT_STATUS,DONE,SUCCESS)
 
 fclean: clean
-	@echo "\033[33m\033[4m\033[1m → Libft \"Fclean\"\033[0m"
-	@echo "Deleting $(NAME)"
 	@$(RM) -f $(NAME)
-	@echo "\033[32m$(NAME) deleted.\033[0m\n"
-	@echo "\033[32mFclean on ASM library.\033[0m\n"
-	@make fclean -C $(ASMPATH)
+	@echo $(PROJECT)": executable clean"
+	@$(MAKE) fclean -C $(ASMPATH)
+	@printf $(PROJECT)": fclean rules "
+	@$(call PRINT_STATUS,DONE,SUCCESS)
 
 re: fclean all
