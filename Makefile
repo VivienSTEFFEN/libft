@@ -227,7 +227,7 @@ clean:
 fclean: clean
 	@$(RM) -f $(NAME)
 	@echo $(PROJECT)": executable clean"
-	@$(MAKE) fclean -C $(ASMPATH)
+	@-$(MAKE) fclean -C $(ASMPATH)
 	@printf $(PROJECT)": fclean rules "
 	@$(call PRINT_STATUS,DONE,SUCCESS)
 
