@@ -177,20 +177,23 @@ define PRINT_STATUS
 	$(if $(filter $(3),-n),printf $(1),echo ']')
 endef
 
-.PHONY: all clean fclean re
+
+.PHONY: all clean fclean re no-asm
 
 all: pre-check-submodule pre-check-lib $(NAME)
 
 pre-check-submodule:
-	@printf $(PROJECT)": Init and update submodules ... "
-	@$(GIT) submodule init &>/dev/null
-	@$(GIT) submodule update --recursive --remote &>/dev/null
+	@echo $(PROJECT)": Init and update submodules ... "
+	@$(GIT) submodule init > /dev/null  # can't directly redirect stdout on /dev/null cause of sync wait on Linux
+	@$(GIT) submodule update --recursive --remote > /dev/null
+	@printf $(PROJECT)": pre-check-submodule rule "
 	@$(call PRINT_STATUS,UP-TO-DATE,SUCCESS)
 
-pre-check-lib:
-	@echo $(PROJECT)": Compile and verify ASM library ... "
-	@$(MAKE) -C $(ASMPATH)
-	@cp $(ASMPATH)/includes/libfts.h $(ROOT)/includes
+pre-check-lib: pre-check-submodule
+	@echo $(PROJECT)": Compile and verify libraries ... "
+	$(if $(filter-out $(MAKECMDGOALS),no-asm),@-$(MAKE) -C $(ASMPATH); cp $(ASMPATH)/includes/libfts.h $(ROOT)/includes)
+	@printf $(PROJECT)": pre-check-lib rule "
+	@$(call PRINT_STATUS,UP-TO-DATE,SUCCESS)
 
 no-asm: $(OPATH) $(OBJ)
 	$(if $(filter $(COMPILE),yes),@echo ']')
@@ -199,7 +202,7 @@ no-asm: $(OPATH) $(OBJ)
 	@$(RANLIB) $(NAME)
 	@$(call PRINT_STATUS,DONE,SUCCESS)
 
-$(NAME): $(OPATH) $(OBJ)
+$(NAME): pre-check-submodule pre-check-lib $(OPATH) $(OBJ)
 	$(if $(filter $(COMPILE),yes),@echo ']')
 	@echo $(PROJECT)": Replace objects with ASM objects"
 	@cp -rf $(ASMPATH)/objs $(ROOT)
@@ -208,10 +211,10 @@ $(NAME): $(OPATH) $(OBJ)
 	@$(RANLIB) $@
 	@$(call PRINT_STATUS,DONE,SUCCESS)
 
-$(OPATH)/%.o: $(CPATH)/%.c
-	@$(CC) $(CFLAGS) -c $< -o $@ $(HPATH)
+$(OPATH)/%.o: $(CPATH)/%.c | pre-check-submodule pre-check-lib
 	$(if $(filter $(COMPILE),no),@printf $(PROJECT)': Files compiling [')
 	@$(eval COMPILE := yes)
+	@$(CC) $(CFLAGS) -c $< -o $@ $(HPATH)
 	$(call PRINT_GREEN,.)
 
 $(OPATH):
