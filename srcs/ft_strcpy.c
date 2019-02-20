@@ -16,15 +16,12 @@ char	*ft_strcpy(char *dest, const char *src)
 {
 	unsigned long	pos;
 
-	if (dest && src)
+	pos = 0;
+	while (src[pos] != '\0')
 	{
-		pos = 0;
-		while (src[pos] != '\0')
-		{
-			dest[pos] = src[pos];
-			pos++;
-		}
 		dest[pos] = src[pos];
+		pos++;
 	}
+	dest[pos] = src[pos];
 	return (dest);
 }

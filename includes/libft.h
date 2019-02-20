@@ -132,8 +132,6 @@ void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 t_list				*ft_lstpcontent(t_list **alst, t_list *new);
 
-void				*mallocp(size_t size);
-
 char				*ft_itoa_base(uintmax_t nb, uint8_t base, size_t prec);
 char				*ft_itoa_base_alph(uintmax_t nb, uint8_t base, char *alph, \
 		size_t prec);

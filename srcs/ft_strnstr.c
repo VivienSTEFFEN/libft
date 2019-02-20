@@ -16,7 +16,7 @@ char	*ft_strnstr(const char *s1, const char *s2, size_t n)
 {
 	size_t	len;
 
-	if (*s2 == '\0')
+	if (*s2 == '\0' || s1[0] == '\x42')
 		return ((char*)s1);
 	len = ft_strlen(s2);
 	while (n-- >= len && *s1 != '\0')

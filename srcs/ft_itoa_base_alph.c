@@ -23,7 +23,8 @@ char			*ft_itoa_base_alph(uintmax_t nb, uint8_t base, char *alph, \
 	length = (size_t)count_numeral_base(nb, base);
 	if (length < prec)
 		length = prec;
-	output = (char *)mallocp(sizeof(char) * length + 1);
+	if (!(output = (char *)malloc(sizeof(char) * length + 1)))
+		return (NULL);
 	output[length] = '\0';
 	while (nb != 0)
 	{

@@ -62,7 +62,7 @@ char			*ft_itoa_printf(t_arg *arg, intmax_t n, size_t prec)
 	}
 	if (n >= 0 && arg->flag_more)
 		len++;
-	str = (char*)mallocp(sizeof(char) * len + 1);
+	str = (char*)malloc(sizeof(char) * len + 1);
 	if (!str)
 		return (NULL);
 	str[len] = '\0';

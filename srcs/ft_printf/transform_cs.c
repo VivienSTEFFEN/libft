@@ -18,7 +18,7 @@ char	*ft_strdup_mod_prec(const char *s, size_t prec, int8_t flag_asterisk)
 	char		*dest;
 
 	pos = 0;
-	dest = (char*)mallocp(sizeof(char) * prec + 1);
+	dest = (char*)malloc(sizeof(char) * prec + 1);
 	while (s[pos] && (flag_asterisk == 1 || prec > pos))
 	{
 		dest[pos] = s[pos];

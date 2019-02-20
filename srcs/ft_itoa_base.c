@@ -12,6 +12,16 @@
 
 #include <libft.h>
 
+static void		fill_zero(size_t length, char *output)
+{
+	if (length > 0)
+	{
+		while (--length > 0)
+			output[length] = '0';
+		output[0] = '0';
+	}
+}
+
 char			*ft_itoa_base(uintmax_t nb, uint8_t base, size_t prec)
 {
 	char		*output;
@@ -23,7 +33,8 @@ char			*ft_itoa_base(uintmax_t nb, uint8_t base, size_t prec)
 	length = (size_t)count_numeral_base(nb, base);
 	if (length < prec)
 		length = prec;
-	output = (char *)mallocp(sizeof(char) * length + 1);
+	if (!(output = (char *)malloc(sizeof(char) * length + 1)))
+		return (NULL);
 	output[length] = '\0';
 	alph = "0123456789abcdef";
 	while (nb != 0)
@@ -32,11 +43,6 @@ char			*ft_itoa_base(uintmax_t nb, uint8_t base, size_t prec)
 		output[length] = alph[nb % base];
 		nb /= base;
 	}
-	if (length > 0)
-	{
-		while (--length > 0)
-			output[length] = '0';
-		output[0] = '0';
-	}
+	fill_zero(length, output);
 	return (output);
 }

@@ -35,7 +35,7 @@ char			*ft_int64_to_array(int64_t n)
 		tmp_nb = -n;
 		len++;
 	}
-	str = (char*)mallocp(sizeof(char) * len + 1);
+	str = (char*)malloc(sizeof(char) * len + 1);
 	if (!str)
 		return (NULL);
 	str[len] = 0;

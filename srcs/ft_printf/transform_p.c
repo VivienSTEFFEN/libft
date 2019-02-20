@@ -21,7 +21,7 @@ char				*ft_ptoa_base_printf(uintptr_t nb, uint8_t base, \
 	length = (size_t)count_numeral_base(nb, base);
 	if (length < prec)
 		length = prec;
-	output = (char *)mallocp(sizeof(char) * length + 1);
+	output = (char *)malloc(sizeof(char) * length + 1);
 	output[length] = '\0';
 	while (nb != 0)
 	{

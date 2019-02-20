@@ -124,7 +124,6 @@ SRC	=	ft_atoi.c \
 		ft_recursive_factorial.c \
 		ft_range.c \
 		ft_foreach.c \
-		mallocp.c \
 		ft_pow_int64.c \
 		ft_length_numeral_int64.c \
 		$(PRINTF)/print.c \
@@ -223,6 +222,7 @@ $(OPATH):
 
 clean:
 	@$(RM) -Rf $(OPATH)
+	@-$(MAKE) clean -C $(ASMPATH)
 	@echo $(PROJECT)": Objects cleaned "
 	@printf $(PROJECT)": clean rule "
 	@$(call PRINT_STATUS,DONE,SUCCESS)

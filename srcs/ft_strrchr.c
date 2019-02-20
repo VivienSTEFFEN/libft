@@ -17,8 +17,6 @@ char	*ft_strrchr(const char *s, int c)
 	char *last_pattern;
 
 	last_pattern = NULL;
-	if (!s)
-		return (NULL);
 	while (*s)
 	{
 		if (*s == (char)c)
