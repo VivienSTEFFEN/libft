@@ -133,4 +133,6 @@ void						flag_color_move_in_arg(t_data *data, \
 								const char *color, size_t move);
 void						flag_width_nb(t_data *data);
 
+size_t						ft_strlenp(const char *str);
+
 #endif

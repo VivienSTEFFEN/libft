@@ -15,7 +15,7 @@
 void	print_output_simple(t_arg *arg, t_data *data)
 {
 	write(arg->tmp_fd, data->format_mod + arg->before_arg, \
-		ft_strlen(data->format_mod + arg->before_arg));
+		ft_strlenp(data->format_mod + arg->before_arg));
 	if (arg->output_wide_length > 0)
 	{
 		write(arg->fd, arg->output_arg, arg->output_wide_length);
@@ -28,8 +28,8 @@ void	print_output_simple(t_arg *arg, t_data *data)
 void	print_output_width(t_arg *arg, t_data *data)
 {
 	write(arg->tmp_fd, data->format_mod + arg->before_arg, \
-		ft_strlen(data->format_mod + arg->before_arg));
-	write(arg->fd, arg->output_width, ft_strlen(arg->output_width));
+		ft_strlenp(data->format_mod + arg->before_arg));
+	write(arg->fd, arg->output_width, ft_strlenp(arg->output_width));
 	if (arg->output_wide_length > 0)
 	{
 		write(arg->fd, arg->output_arg, arg->output_wide_length);
@@ -43,7 +43,7 @@ void	print_output_width(t_arg *arg, t_data *data)
 void	print_output_width_reverse(t_arg *arg, t_data *data)
 {
 	write(arg->tmp_fd, data->format_mod + arg->before_arg, \
-		ft_strlen(data->format_mod + arg->before_arg));
+		ft_strlenp(data->format_mod + arg->before_arg));
 	if (arg->output_wide_length > 0)
 	{
 		write(arg->fd, arg->output_arg, arg->output_wide_length);
@@ -51,7 +51,7 @@ void	print_output_width_reverse(t_arg *arg, t_data *data)
 	}
 	else
 		write(arg->fd, arg->output_arg, arg->output_length);
-	write(arg->fd, arg->output_width, ft_strlen(arg->output_width));
+	write(arg->fd, arg->output_width, ft_strlenp(arg->output_width));
 	free(arg->output_width);
 }
 
@@ -79,7 +79,7 @@ void	print_arg_and_free(t_data *data)
 		arg_ptr_current = arg_ptr_next;
 	}
 	write(data->fd, data->format + data->tmp_format_pos, \
-		ft_strlen(data->format + data->tmp_format_pos));
+		ft_strlenp(data->format + data->tmp_format_pos));
 	if (data->color_set == 1)
 		write(1, "\033[0m", 4);
 }

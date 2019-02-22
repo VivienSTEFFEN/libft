@@ -12,6 +12,13 @@
 
 #include "ft_printf.h"
 
+size_t	ft_strlenp(const char *str)
+{
+	if (!str)
+		return (0);
+	return (ft_strlen(str));
+}
+
 void	init_data_and_var(t_data *data, const char *restrict format)
 {
 	data->format = format;

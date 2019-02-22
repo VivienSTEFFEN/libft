@@ -108,7 +108,7 @@ int		parse_and_move_format(t_data *data)
 	if (data->current->output_wide_length > 0)
 		data->current->output_length += data->current->output_wide_length;
 	else
-		data->current->output_length += ft_strlen(data->current->output_arg);
+		data->current->output_length += ft_strlenp(data->current->output_arg);
 	if (data->current->output_arg == NULL && data->error > 0 && \
 		data->error != 100)
 		data->current->output_arg = ft_strdup("");

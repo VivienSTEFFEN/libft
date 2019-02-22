@@ -25,7 +25,7 @@ int8_t		parser_flag4(t_data *data, char char_analyse)
 			data->error == 0)
 		{
 			data->error = 1;
-			data->len_so_far -= ft_strlen(data->current->output_arg);
+			data->len_so_far -= ft_strlenp(data->current->output_arg);
 			data->current->output_arg[0] = '\0';
 			data->move_in_arg = 1;
 		}
