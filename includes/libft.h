@@ -6,7 +6,7 @@
 /*   By: vsteffen <vsteffen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/22 20:42:40 by vsteffen          #+#    #+#             */
-/*   Updated: 2018/08/12 20:20:18 by vsteffen         ###   ########.fr       */
+/*   Updated: 2019/03/10 16:47:51 by magouin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,5 +142,7 @@ int64_t				ft_pow_int64(int64_t nb, uint8_t power);
 uint8_t				ft_length_numeral_int64(int64_t nb);
 int64_t				ft_hexstr_to_int64_t(unsigned const char *hex);
 char				*ft_int64_to_array(int64_t n);
+char				*ft_strtoupper(char *str);
+char				*ft_strtolower(char *str);
 
 #endif

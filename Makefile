@@ -6,7 +6,7 @@
 #    By: vsteffen <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/02/06 20:52:05 by vsteffen          #+#    #+#              #
-#    Updated: 2018/09/17 16:07:12 by vsteffen         ###   ########.fr        #
+#    Updated: 2019/03/10 16:48:29 by magouin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -100,6 +100,8 @@ SRC	=	ft_atoi.c \
 		ft_strsub.c \
 		ft_strtrim.c \
 		ft_tolower.c \
+		ft_strtoupper.c \
+		ft_strtolower.c \
 		ft_toupper.c \
 		ft_clear.c \
 		ft_color_style.c \

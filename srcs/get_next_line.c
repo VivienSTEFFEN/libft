@@ -57,38 +57,27 @@ static char		*strjoin_secure(char *s1, char *s2)
 		return (join);
 	}
 	if (s2 == NULL)
-	{
-		join = ft_strdup(s1);
-		ft_strdel(&s1);
-		return (join);
-	}
-	if (s1 != NULL && s2 != NULL)
-	{
-		join = ft_strjoin(s1, s2);
-		ft_strdel(&s1);
-		return (join);
-	}
-	return (NULL);
+		return (s1);
+	join = ft_strjoin(s1, s2);
+	ft_strdel(&s1);
+	return (join);
 }
 
-static int		newline_detected(char *stbuff, char **line,
-		int flag, t_gnl **elem)
+static int		newline_detected(char **line,
+		int flag, t_gnl *elem)
 {
 	char			*nl;
 
 	if (flag == 0)
 	{
-		nl = ft_strchr(stbuff, '\n');
-		*line = ft_strsub(stbuff, 0, nl - stbuff);
-		ft_strcpy(stbuff, nl + 1);
+		nl = ft_strchr(elem->line, '\n');
+		*line = ft_strsub(elem->line, 0, nl - elem->line);
+		ft_strcpy(elem->line, nl + 1);
 		return (1);
 	}
-	else
-	{
-		*line = ft_strdup((*elem)->line);
-		ft_strdel(&((*elem)->line));
-		return (1);
-	}
+	*line = elem->line;
+	elem->line = NULL;
+	return (2);
 }
 
 int				get_next_line(const int fd, char **line)
@@ -104,18 +93,18 @@ int				get_next_line(const int fd, char **line)
 		elem = gnl_add_elem(&lst, fd);
 	if ((elem->line && ft_strchr(elem->line, '\n') != NULL)
 			&& elem->line && elem->line[0])
-		return (newline_detected(elem->line, line, 0, NULL));
+		return (newline_detected(line, 0, elem));
 	while ((ret = read(fd, buff, BUFF_SIZE)) > 0)
 	{
 		buff[ret] = '\0';
-		if ((elem->line = strjoin_secure(elem->line, buff)) == NULL)
-			return (-1);
+		elem->line = strjoin_secure(elem->line, buff);
 		if (ft_strchr(elem->line, '\n') != NULL)
-			return (newline_detected(elem->line, line, 0, NULL));
+			return (newline_detected(line, 0, elem));
 	}
 	if (ret == -1)
 		return (-1);
-	if (elem->line && *(elem->line))
-		return (newline_detected(NULL, line, 1, &elem));
-	return (0);
+	if (elem->line == NULL)
+		return (((int)(elem->line = ft_strdup("")) & 0));
+	newline_detected(line, 1, elem);
+	return ((**line == 0) ? 0 : 2);
 }
