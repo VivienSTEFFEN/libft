@@ -6,7 +6,7 @@
 #    By: vsteffen <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/02/06 20:52:05 by vsteffen          #+#    #+#              #
-#    Updated: 2019/03/10 16:48:29 by magouin          ###   ########.fr        #
+#    Updated: 2019/03/10 16:48:29 by vsteffen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -155,7 +155,21 @@ SRC	=	ft_atoi.c \
 		ft_int64_to_array.c
 
 
+PRE_CHECK_SUB_LIBFTASM	=	$(ASMPATH)/Makefile
+PRE_CHECK_SUB	=	$(PRE_CHECK_SUB_LIBFTASM)
+# PRE_CHECK_LIB_LIBFTASM	=	$(ASMPATH)/libfts.a
+# PRE_CHECK_LIB	=	$(PRE_CHECK_LIB_LIBFTASM)
+
 COMPILE = no
+
+OS		:= $(shell uname -s)
+
+ifeq ($(OS),Darwin)
+	NPROCS:=$(shell sysctl -n hw.ncpu)
+else
+	NPROCS:=$(shell grep -c ^processor /proc/cpuinfo)
+endif
+
 
 define PRINT_RED
     @printf "\033[31m$(1)\033[0m"
@@ -179,31 +193,28 @@ define PRINT_STATUS
 endef
 
 
-.PHONY: all clean fclean re no-asm
+.PHONY: all clean fclean re no-asm lib-clean lib-update pre-check-lib
 
-all: pre-check-submodule pre-check-lib $(NAME)
+all: $(NAME)
 
-pre-check-submodule:
-	@echo $(PROJECT)": Init and update submodules ... "
+$(PRE_CHECK_SUB):
+	@echo $(PROJECT)": Init submodules ... "
 	@$(GIT) submodule init > /dev/null  # can't directly redirect stdout on /dev/null cause of sync wait on Linux
 	@$(GIT) submodule update --recursive --remote > /dev/null
-	@printf $(PROJECT)": pre-check-submodule rule "
-	@$(call PRINT_STATUS,UP-TO-DATE,SUCCESS)
+	@printf $(PROJECT)": submodules "
+	@$(call PRINT_STATUS,INITIALIZED,SUCCESS)
 
-pre-check-lib: pre-check-submodule
-	@echo $(PROJECT)": Compile and verify libraries ... "
-	$(if $(filter-out $(MAKECMDGOALS),no-asm),@-$(MAKE) -C $(ASMPATH); cp $(ASMPATH)/includes/libfts.h $(ROOT)/includes)
-	@printf $(PROJECT)": pre-check-lib rule "
-	@$(call PRINT_STATUS,UP-TO-DATE,SUCCESS)
+pre-check-lib: $(PRE_CHECK_SUB)
+	$(if $(filter-out $(MAKECMDGOALS),no-asm),@-$(MAKE) -C $(ASMPATH) -j$(NPROCS); cp $(ASMPATH)/includes/libfts.h $(ROOT)/includes)
 
-no-asm: $(OPATH) $(OBJ)
+no-asm: $(PRE_CHECK_LIB) $(OPATH) $(OBJ)
 	$(if $(filter $(COMPILE),yes),@echo ']')
 	@printf $(PROJECT)": Building $(NAME) without ASM functions ... "
 	@$(AR) rc $(NAME) $(OBJ)
 	@$(RANLIB) $(NAME)
 	@$(call PRINT_STATUS,DONE,SUCCESS)
 
-$(NAME): pre-check-submodule pre-check-lib $(OPATH) $(OBJ)
+$(NAME): $(PRE_CHECK_LIB) $(OPATH) $(OBJ)
 	$(if $(filter $(COMPILE),yes),@echo ']')
 	@echo $(PROJECT)": Replace objects with ASM objects"
 	@cp -rf $(ASMPATH)/objs $(ROOT)
@@ -212,15 +223,15 @@ $(NAME): pre-check-submodule pre-check-lib $(OPATH) $(OBJ)
 	@$(RANLIB) $@
 	@$(call PRINT_STATUS,DONE,SUCCESS)
 
-$(OPATH)/%.o: $(CPATH)/%.c | pre-check-submodule pre-check-lib
+$(OPATH)/%.o: $(CPATH)/%.c | pre-check-lib
 	$(if $(filter $(COMPILE),no),@printf $(PROJECT)': Files compiling [')
 	@$(eval COMPILE := yes)
 	@$(CC) $(CFLAGS) -c $< -o $@ $(HPATH)
 	$(call PRINT_GREEN,.)
 
 $(OPATH):
+	@echo $(PROJECT)": Creation of objects directory"
 	@$(MKDIR) $@ $@$(PRINTF)
-	@echo $(PROJECT)": Directory for objects created"
 
 clean:
 	@$(RM) -Rf $(OPATH)
@@ -236,4 +247,17 @@ fclean: clean
 	@printf $(PROJECT)": fclean rules "
 	@$(call PRINT_STATUS,DONE,SUCCESS)
 
-re: fclean all
+re: fclean
+	@$(MAKE) -C $(ROOT) -j$(NPROCS)
+
+lib-clean:
+	@echo $(PROJECT)": cleaning libraries ..."
+	@-$(MAKE) -C $(ASMPATH) fclean -j$(NPROCS)
+	@printf $(PROJECT)": $@ rule "
+	@$(call PRINT_STATUS,DONE,SUCCESS)
+
+lib-update:
+	@echo $(PROJECT)": Update submodules ... "
+	@$(GIT) submodule update --recursive --remote > /dev/null
+	@printf $(PROJECT)": submodules "
+	@$(call PRINT_STATUS,UPDATED,SUCCESS)
