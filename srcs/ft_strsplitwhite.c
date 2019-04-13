@@ -6,13 +6,13 @@
 /*   By: vsteffen <vsteffen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/22 22:42:05 by vsteffen          #+#    #+#             */
-/*   Updated: 2015/12/23 04:41:41 by vsteffen         ###   ########.fr       */
+/*   Updated: 2019/04/13 19:04:30 by vsteffen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		nbword(const char *s, char c)
+static int		nbword(const char *s)
 {
 	int		in_word;
 	int		count;
@@ -61,7 +61,7 @@ char			**ft_strsplitwhite(char const *s)
 		return (NULL);
 	while (nb_word--)
 	{
-		while (*s == c && *s != '\0')
+		while (ft_isspace(*s) && *s != '\0')
 			s++;
 		tab[index] = ft_strsub((const char *)s, 0, len_w((const char *)s));
 		if (!tab[index])
