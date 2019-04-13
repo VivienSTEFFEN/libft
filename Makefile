@@ -152,7 +152,8 @@ SRC	=	ft_atoi.c \
 		$(PRINTF)/transform_wide1.c \
 		$(PRINTF)/transform_wide2.c \
 		ft_hexstr_to_int64.c \
-		ft_int64_to_array.c
+		ft_int64_to_array.c \
+		ft_strsplitwhite.c
 
 
 PRE_CHECK_SUB_LIBFTASM	=	$(ASMPATH)/Makefile

@@ -144,5 +144,6 @@ int64_t				ft_hexstr_to_int64_t(unsigned const char *hex);
 char				*ft_int64_to_array(int64_t n);
 char				*ft_strtoupper(char *str);
 char				*ft_strtolower(char *str);
+char				**ft_strsplitwhite(char const *s);
 
 #endif
