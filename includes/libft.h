@@ -89,9 +89,6 @@ int					ft_isprint(int c);
 void				ft_clear(void);
 void				ft_color_style(char *color1, char *color2, char *str,
 		int again);
-int					get_next_line(const int fd, char **line);
-void				ft_superstr(char *str1, char *str2, char *str3, char *str4);
-void				ft_exit_prog(char *status, char *color, int debug);
 
 float				ft_rounded(float number, int decimal);
 
@@ -111,12 +108,6 @@ int					ft_recursive_factorial(int nb);
 int					*ft_range(int min, int max);
 void				ft_foreach(int *tab, int length, void (*f)(int));
 
-typedef struct		s_list
-{
-	void			*content;
-	size_t			content_size;
-	struct s_list	*next;
-}					t_list;
 
 typedef	struct		s_gnl
 {
@@ -125,13 +116,7 @@ typedef	struct		s_gnl
 	struct s_gnl	*next;
 }					t_gnl;
 
-t_list				*ft_lstnew(void const *content, size_t content_size);
-void				ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
-void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
-void				ft_lstadd(t_list **alst, t_list *new);
-void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
-t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
-t_list				*ft_lstpcontent(t_list **alst, t_list *new);
+int					get_next_line(const int fd, char **line);
 
 char				*ft_itoa_base(uintmax_t nb, uint8_t base, size_t prec);
 char				*ft_itoa_base_alph(uintmax_t nb, uint8_t base, char *alph, \

@@ -50,13 +50,6 @@ SRC	=	ft_atoi.c \
 		ft_dtoa_clean.c \
 		ft_itoa_base.c \
 		ft_itoa_base_alph.c \
-		ft_lstadd.c \
-		ft_lstdel.c \
-		ft_lstdelone.c \
-		ft_lstpcontent.c \
-		ft_lstmap.c \
-		ft_lstnew.c \
-		ft_lstiter.c \
 		ft_memalloc.c \
 		ft_memccpy.c \
 		ft_memchr.c \
@@ -106,7 +99,6 @@ SRC	=	ft_atoi.c \
 		ft_clear.c \
 		ft_color_style.c \
 		get_next_line.c \
-		ft_exit_prog.c \
 		ft_rounded.c \
 		ft_swap_str.c \
 		ft_swap_char.c \
@@ -115,7 +107,6 @@ SRC	=	ft_atoi.c \
 		ft_qsortr_tab_int.c \
 		ft_qsort_tab_str.c \
 		ft_qsortr_tab_str.c \
-		ft_superstr.c \
 		ft_itoa_base.c\
 		ft_strjoinaf1.c \
 		ft_strjoinaf2.c \

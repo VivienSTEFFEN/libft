@@ -20,7 +20,10 @@ char	*ft_strstr(const char *s1, const char *s2)
 	if (!len)
 		return ((char *)s1);
 	while (*s1)
-		if (!ft_memcmp(s1++, s2, len))
-			return ((char *)s1 - 1);
+	{
+		if (!ft_memcmp(s1, s2, len))
+			return ((char *)s1);
+		s1++;
+	}
 	return (NULL);
 }
