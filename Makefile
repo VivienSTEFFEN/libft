@@ -185,7 +185,7 @@ define PRINT_STATUS
 endef
 
 
-.PHONY: all clean fclean re no-asm lib-clean lib-update pre-check-lib
+.PHONY: all clean fclean re with-asm lib-clean lib-update pre-check-lib
 
 all: $(NAME)
 
@@ -197,22 +197,22 @@ $(PRE_CHECK_SUB):
 	@$(call PRINT_STATUS,INITIALIZED,SUCCESS)
 
 pre-check-lib: $(PRE_CHECK_SUB)
-	$(if $(filter-out $(MAKECMDGOALS),no-asm),@-$(MAKE) -C $(ASMPATH) -j$(NPROCS); cp $(ASMPATH)/includes/libfts.h $(ROOT)/includes)
+	$(if $(filter $(MAKECMDGOALS),with-asm),@-$(MAKE) -C $(ASMPATH) -j$(NPROCS); cp $(ASMPATH)/includes/libfts.h $(ROOT)/includes)
 
-no-asm: $(PRE_CHECK_LIB) $(OPATH) $(OBJ)
+with-asm: $(PRE_CHECK_LIB) $(OPATH) $(OBJ)
 	$(if $(filter $(COMPILE),yes),@echo ']')
-	@printf $(PROJECT)": Building $(NAME) without ASM functions ... "
-	@$(AR) rc $(NAME) $(OBJ)
+	@echo $(PROJECT)": Replace objects with ASM objects"
+	@cp -rf $(ASMPATH)/objs $(ROOT)
+	@printf $(PROJECT)": Building $@ with ASM functions ... "
+	@$(AR) rc $(NAME) $(OBJ) $(ASMOBJS)
 	@$(RANLIB) $(NAME)
 	@$(call PRINT_STATUS,DONE,SUCCESS)
 
 $(NAME): $(PRE_CHECK_LIB) $(OPATH) $(OBJ)
 	$(if $(filter $(COMPILE),yes),@echo ']')
-	@echo $(PROJECT)": Replace objects with ASM objects"
-	@cp -rf $(ASMPATH)/objs $(ROOT)
-	@printf $(PROJECT)": Building $@ with ASM functions ... "
-	@$(AR) rc $@ $(OBJ) $(ASMOBJS)
-	@$(RANLIB) $@
+	@printf $(PROJECT)": Building $(NAME) without ASM functions ... "
+	@$(AR) rc $(NAME) $(OBJ)
+	@$(RANLIB) $(NAME)
 	@$(call PRINT_STATUS,DONE,SUCCESS)
 
 $(OPATH)/%.o: $(CPATH)/%.c | pre-check-lib
