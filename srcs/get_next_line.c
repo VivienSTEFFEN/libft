@@ -6,7 +6,7 @@
 /*   By: vsteffen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/01 14:02:42 by vsteffen          #+#    #+#             */
-/*   Updated: 2019/04/19 19:36:08 by magouin          ###   ########.fr       */
+/*   Updated: 2019/11/26 21:47:41 by vsteffen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int				create_line(char **line, t_gnl *curr,
 		tmp = *line;
 		if (!(*line = malloc(*size)))
 			return (-1);
-		tmp ? (int)ft_strcpy(*line, tmp) : (**line = 0);
+		tmp ? (size_t)ft_strcpy(*line, tmp) : (**line = 0);
 		free(tmp);
 	}
 	if ((tmp = ft_strchr(curr->line, '\n')))
