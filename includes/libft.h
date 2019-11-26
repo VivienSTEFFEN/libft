@@ -6,7 +6,7 @@
 /*   By: vsteffen <vsteffen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/22 20:42:40 by vsteffen          #+#    #+#             */
-/*   Updated: 2019/03/10 16:47:51 by magouin          ###   ########.fr       */
+/*   Updated: 2019/11/26 22:57:18 by vsteffen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ int					ft_iterative_factorial(int nb);
 int					ft_recursive_factorial(int nb);
 int					*ft_range(int min, int max);
 void				ft_foreach(int *tab, int length, void (*f)(int));
-
 
 typedef	struct		s_gnl
 {
