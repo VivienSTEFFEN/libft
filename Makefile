@@ -6,7 +6,7 @@
 #    By: vsteffen <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/02/06 20:52:05 by vsteffen          #+#    #+#              #
-#    Updated: 2020/02/12 19:28:08 by vsteffen         ###   ########.fr        #
+#    Updated: 2020/02/12 19:35:01 by vsteffen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -249,6 +249,6 @@ lib-clean:
 
 lib-update:
 	@echo $(PROJECT)": Update submodules ... "
-	@$(GIT) submodule update --recursive --remote > /dev/null
+	@$(GIT) submodule update --init --recursive --remote > /dev/null
 	@printf $(PROJECT)": submodules "
 	@$(call PRINT_STATUS,UPDATED,SUCCESS)
