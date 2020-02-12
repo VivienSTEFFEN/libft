@@ -6,7 +6,7 @@
 #    By: vsteffen <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/02/06 20:52:05 by vsteffen          #+#    #+#              #
-#    Updated: 2019/03/10 16:48:29 by vsteffen         ###   ########.fr        #
+#    Updated: 2020/02/12 19:28:08 by vsteffen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -191,8 +191,7 @@ all: $(NAME)
 
 $(PRE_CHECK_SUB):
 	@echo $(PROJECT)": Init submodules ... "
-	@$(GIT) submodule init > /dev/null  # can't directly redirect stdout on /dev/null cause of sync wait on Linux
-	@$(GIT) submodule update --recursive --remote > /dev/null
+	@$(GIT) submodule update --init --recursive > /dev/null  # can't directly redirect stdout on /dev/null cause of sync wait on Linux
 	@printf $(PROJECT)": submodules "
 	@$(call PRINT_STATUS,INITIALIZED,SUCCESS)
 
